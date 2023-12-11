@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/08 08:28:33 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/11 14:58:01 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ ssize_t	binradio(pid_t id, char *str)
 	while (str[i])
 	{
 		bin = to_bin((unsigned char)str[i]);
-		printf("%s\n", bin);
 		j = -1;
 		while (bin[++j])
 		{

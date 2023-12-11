@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/cesar/Cursus/minitalk",
-      "program": "/home/cesar/Cursus/minitalk/build/Debug/outDebug",
+      "cwd": "/home/cefuente/Cursus/minitalk",
+      "program": "/home/cefuente/Cursus/minitalk/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

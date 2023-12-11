@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:06 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/08 08:28:37 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/11 15:12:35 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	radiobin(int sig)
 	if (i == 8)
 	{
 		write(1, &ret, 1);
+		if (ret == '\0')
+			write(1, "Message received\n", 18);
 		i = 0;
 		ret = 0;
 	}
@@ -39,9 +41,10 @@ int	main(void)
 
 	sa.sa_handler = &radiobin;
 	printf("Server PID is %i\n", getpid());
-	sigaction(SIGUSR1, &sa, 0);
-	sigaction(SIGUSR2, &sa, 0);
 	while (1)
-		usleep(100);
+	{
+		sigaction(SIGUSR1, &sa, 0);
+		sigaction(SIGUSR2, &sa, 0);
+	}
 	return (0);
 }
