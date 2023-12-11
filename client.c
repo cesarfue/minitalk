@@ -6,11 +6,11 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/07 15:29:53 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/08 08:28:33 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#include "includes/minitalk.h"
 
 size_t	ft_strlen(char *str)
 {
@@ -64,9 +64,6 @@ ssize_t	binradio(pid_t id, char *str)
 		free(bin);
 		i++;
 	}
-	i = -1;
-	while (++i <= 8)
-		kill(id, SIGUSR1);
 	return (0);
 }
 
