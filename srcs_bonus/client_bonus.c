@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:52 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 15:50:32 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 16:48:39 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	end_sig(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		usleep(10);
 		printf("Message transmitted\n");
 		exit(0);
 	}
@@ -54,14 +53,16 @@ void	binradio(pid_t id, char c)
 		{
 			if (kill(id, SIGUSR1) == -1)
 				quit("SIGUSR1 not sent");
+			usleep(100);
 		}
 		else if (bin[j] == '1')
+		{
 			if (kill(id, SIGUSR2) == -1)
 				quit("SIGUSR2 not sent");
-		usleep(3);
+			usleep(100);
+		}
 	}
 	free(bin);
-	usleep(10);
 }
 
 int	main(int argc, char **argv)
@@ -82,12 +83,8 @@ int	main(int argc, char **argv)
 	msg = argv[2];
 	i = -1;
 	while (msg[++i])
-	{
 		binradio(id, msg[i]);
-		usleep(10);
-	}
 	binradio(id, '\0');
-	usleep(10);
 	while (1)
 		pause();
 	return (0);
