@@ -6,7 +6,7 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:20 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/11 21:42:49 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:14:34 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	static int		ret = 0;
 	int				bin;
 
-	(void)ucontent
+	(void)ucontent;
+	(void)info;
 	if (sig == SIGUSR1)
 		bin = 0;
 	else if (sig == SIGUSR2)
@@ -27,28 +28,27 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	i++;
 	if (i == 8)
 	{
+		if (!ret)
+			quit("Received signal");
 		write(1, &ret, 1);
-		if (ret == 0)
-			if (!(kill(info->si_pid, SIGUSR1)))
-				quit("Signal not sent");
 		i = 0;
 		ret = 0;
 	}
 }
 
-
 int	main(void)
 {
 	struct sigaction	sa;
 
+	sigemptyset(&sa.sa_mask);
 	sa.sa_sigaction = &radiobin;
+	sa.sa_flags = SA_SIGINFO;
 	printf("Server PID is %i\n", getpid());
+	if (sigaction(SIGUSR1, &sa, 0) == -1)
+		quit("No action taken for SIGUSR1");
+	if (sigaction(SIGUSR2, &sa, 0) == -1)
+		quit("No action taken for SIGUSR2");
 	while (1)
-	{
-		if (sigaction(SIGUSR1, &sa, 0) == -1)
-			quit("Signal not sent");
-		if (sigaction(SIGUSR2, &sa, 0) == -1)
-			quit("Signal not sent");
-	}
+		pause();
 	return (0);
 }

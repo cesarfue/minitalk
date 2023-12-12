@@ -6,11 +6,9 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:52 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/11 21:50:47 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:13:51 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../includes/minitalk.h"
 
 
 char	*to_bin(int n)
@@ -31,47 +29,58 @@ char	*to_bin(int n)
 	return (str);
 }
 
-void	sendend(pid_t id)
-{
-	ssize_t	i;
-
-	i = -1;
-	while (++i < 8)
-		if (!kill(id, SIGUSR1))
-			quit("Signal not sent");
-}
-
 void	binradio(pid_t id, char *str)
 {
 	char			*bin;
 	ssize_t			i;
 	ssize_t			j;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
-		bin = to_bin((unsigned char)str[i++]);
+		bin = to_bin((unsigned char)str[i]);
 		j = -1;
 		while (bin[++j])
 		{
 			if (bin[j] == '0')
 			{
-				if (!kill(id, SIGUSR1))
-					quit("Signal not sent");
+				if (kill(id, SIGUSR1) == -1)
+					quit("SIGUSR1 not sent");
 			}
 			else if (bin[j] == '1')
-				if (!kill(id, SIGUSR2))
-					quit("Signal not sent");
+				if (kill(id, SIGUSR2) == -1)
+					quit("SIGUSR2 not sent");
 			usleep(10);
 		}
 		free(bin);
 	}
+	// bin = to_bin('\0');
+	// j = -1;
+	// while (bin[++j])
+	// {
+	// 	if (bin[j] == '0')
+	// 	{
+	// 		if (kill(id, SIGUSR1) == -1)
+	// 			quit("SIGUSR1 not sent");
+	// 	}
+	// 	else if (bin[j] == '1')
+	// 		if (kill(id, SIGUSR2) == -1)
+	// 			quit("SIGUSR2 not sent");
+	// 	usleep(10);
+	// }
+	// free(bin);
 }
 
 int	main(int argc, char **argv)
 {
+	pid_t	id;
+	char	*msg;
+
 	if (argc != 3 || !argv[1] || !argv[2])
 		quit("Invalid arguments");
-	binradio(ft_atoi(argv[1]), argv[2]);
+	id = ft_atoi(argv[1]);
+	msg = argv[2];
+	binradio(id, msg);
+	binradio(id, "\0");
 	return (0);
 }

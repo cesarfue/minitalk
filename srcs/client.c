@@ -6,7 +6,7 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 11:06:25 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:18:24 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,22 @@ void	binradio(pid_t id, char *str)
 			else if (bin[j] == '1')
 				if (kill(id, SIGUSR2) == -1)
 					quit("SIGUSR2 not sent");
-			usleep(10);
+			usleep(100);
 		}
 		free(bin);
 	}
-	bin = to_bin('\0');
-	j = -1;
-	while (bin[++j])
-	{
-		if (bin[j] == '0')
-		{
-			if (kill(id, SIGUSR1) == -1)
-				quit("SIGUSR1 not sent");
-		}
-		else if (bin[j] == '1')
-			if (kill(id, SIGUSR2) == -1)
-				quit("SIGUSR2 not sent");
-		usleep(10);
-	}
-	free(bin);
 }
 
 int	main(int argc, char **argv)
 {
+	pid_t	id;
+	char	*msg;
+
 	if (argc != 3 || !argv[1] || !argv[2])
 		quit("Invalid arguments");
-	binradio(ft_atoi(argv[1]), argv[2]);
+	id = ft_atoi(argv[1]);
+	msg = argv[2];
+	binradio(id, msg);
 	return (0);
 }
 
