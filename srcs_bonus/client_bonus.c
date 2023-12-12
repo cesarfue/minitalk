@@ -6,18 +6,17 @@
 /*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:52 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 16:48:39 by cefuente         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:13:13 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-
 void	end_sig(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		printf("Message transmitted\n");
+		write(1, "Message transmitted\n", 21);
 		exit(0);
 	}
 }
@@ -53,16 +52,28 @@ void	binradio(pid_t id, char c)
 		{
 			if (kill(id, SIGUSR1) == -1)
 				quit("SIGUSR1 not sent");
-			usleep(100);
 		}
 		else if (bin[j] == '1')
 		{
 			if (kill(id, SIGUSR2) == -1)
 				quit("SIGUSR2 not sent");
-			usleep(100);
 		}
+		usleep(100);
 	}
 	free(bin);
+}
+
+void	sigconfig(void)
+{
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &end_sig;
+	sa.sa_flags = SA_SIGINFO;
+	if (sigaction(SIGUSR1, &sa, 0) == -1)
+		quit("No action taken for SIGUSR1");
+	if (sigaction(SIGUSR2, &sa, 0) == -1)
+		quit("No action taken for SIGUSR2");
 }
 
 int	main(int argc, char **argv)
@@ -70,15 +81,9 @@ int	main(int argc, char **argv)
 	pid_t				id;
 	ssize_t				i;
 	char				*msg;
-	struct sigaction	sa;
 
 	if (argc != 3 || !argv[1] || !argv[2])
 		quit("Invalid arguments");
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = &end_sig;
-	sa.sa_flags = SA_SIGINFO;
-	if (sigaction(SIGUSR1, &sa, 0) == -1)
-		quit("No action taken for SIGUSR1");
 	id = ft_atoi(argv[1]);
 	msg = argv[2];
 	i = -1;
@@ -86,6 +91,6 @@ int	main(int argc, char **argv)
 		binradio(id, msg[i]);
 	binradio(id, '\0');
 	while (1)
-		pause();
+		sigconfig();
 	return (0);
 }

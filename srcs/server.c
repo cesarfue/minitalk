@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:06 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 11:05:26 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 17:13:51 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,44 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	int				bin;
 
 	(void)ucontent;
-	(void)info;
 	if (sig == SIGUSR1)
 		bin = 0;
-	else if (sig == SIGUSR2)
+	else
 		bin = 1;
 	ret = (ret << 1) | bin;
 	i++;
 	if (i == 8)
 	{
-		if (!ret)
-			quit("Received signal");
-		write(1, &ret, 1);
+		if (ret == 0)
+		{
+			usleep(200);
+			if (kill(info->si_pid, SIGUSR1) == -1)
+				quit("Client couldn't be reached");
+		}
+		else
+			write(1, &ret, 1);
 		i = 0;
 		ret = 0;
 	}
 }
 
-
-int	main(void)
+void	sigconfig(void)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_sigaction = &radiobin;
 	sa.sa_flags = SA_SIGINFO;
-	printf("Server PID is %i\n", getpid());
 	if (sigaction(SIGUSR1, &sa, 0) == -1)
 		quit("No action taken for SIGUSR1");
 	if (sigaction(SIGUSR2, &sa, 0) == -1)
 		quit("No action taken for SIGUSR2");
+}
+
+int	main(void)
+{
+	printf("Server PID is %i\n", getpid());
 	while (1)
-		pause();
+		sigconfig();
 	return (0);
 }

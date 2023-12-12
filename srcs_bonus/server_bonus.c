@@ -6,7 +6,7 @@
 /*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:20 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 16:55:11 by cefuente         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:12:52 by cefuente         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	{
 		if (ret == 0)
 		{
+			usleep(200);
 			if (kill(info->si_pid, SIGUSR1) == -1)
 				quit("Client couldn't be reached");
 		}
@@ -39,7 +40,7 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	}
 }
 
-void sigconfig(void)
+void	sigconfig(void)
 {
 	struct sigaction	sa;
 
@@ -50,13 +51,12 @@ void sigconfig(void)
 		quit("No action taken for SIGUSR1");
 	if (sigaction(SIGUSR2, &sa, 0) == -1)
 		quit("No action taken for SIGUSR2");
-
 }
 
 int	main(void)
 {
 	printf("Server PID is %i\n", getpid());
-	while(1)
+	while (1)
 		sigconfig();
 	return (0);
 }
