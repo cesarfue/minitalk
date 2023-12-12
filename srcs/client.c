@@ -6,7 +6,7 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 11:18:24 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 15:37:59 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	main(int argc, char **argv)
 	id = ft_atoi(argv[1]);
 	msg = argv[2];
 	binradio(id, msg);
+	while(1)
+		pause();
 	return (0);
 }
 

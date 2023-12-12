@@ -6,7 +6,7 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:20 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 11:14:34 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/12 15:44:19 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	int				bin;
 
 	(void)ucontent;
-	(void)info;
 	if (sig == SIGUSR1)
 		bin = 0;
 	else if (sig == SIGUSR2)
@@ -28,9 +27,14 @@ void	radiobin(int sig, siginfo_t *info, void *ucontent)
 	i++;
 	if (i == 8)
 	{
-		if (!ret)
-			quit("Received signal");
-		write(1, &ret, 1);
+		if (ret == 0)
+		{
+			usleep(3);
+			if (kill(info->si_pid, SIGUSR1) == -1)
+				quit("Client couldn't be reached");
+		}
+		else
+			write(1, &ret, 1);
 		i = 0;
 		ret = 0;
 	}
