@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/11 14:58:01 by cefuente         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:06:25 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minitalk.h"
-
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "../includes/minitalk.h"
 
 char	*to_bin(int n)
 {
@@ -40,42 +30,58 @@ char	*to_bin(int n)
 	return (str);
 }
 
-
-ssize_t	binradio(pid_t id, char *str)
+void	binradio(pid_t id, char *str)
 {
 	char			*bin;
 	ssize_t			i;
 	ssize_t			j;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		bin = to_bin((unsigned char)str[i]);
 		j = -1;
 		while (bin[++j])
 		{
 			if (bin[j] == '0')
-				kill(id, SIGUSR1);
+			{
+				if (kill(id, SIGUSR1) == -1)
+					quit("SIGUSR1 not sent");
+			}
 			else if (bin[j] == '1')
-				kill(id, SIGUSR2);
+				if (kill(id, SIGUSR2) == -1)
+					quit("SIGUSR2 not sent");
 			usleep(10);
 		}
 		free(bin);
-		i++;
 	}
-	return (0);
+	bin = to_bin('\0');
+	j = -1;
+	while (bin[++j])
+	{
+		if (bin[j] == '0')
+		{
+			if (kill(id, SIGUSR1) == -1)
+				quit("SIGUSR1 not sent");
+		}
+		else if (bin[j] == '1')
+			if (kill(id, SIGUSR2) == -1)
+				quit("SIGUSR2 not sent");
+		usleep(10);
+	}
+	free(bin);
 }
 
 int	main(int argc, char **argv)
 {
-	pid_t				id;
-	char		*str;
-
 	if (argc != 3 || !argv[1] || !argv[2])
-		return (-1);
-	id = atoi(argv[1]);
-	str = argv[2];
-	if (!binradio(id, str))
-		return (-1);
+		quit("Invalid arguments");
+	binradio(ft_atoi(argv[1]), argv[2]);
 	return (0);
 }
+
+
+
+
+
+

@@ -6,48 +6,58 @@
 #    By: cesar <cesar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 18:46:17 by cefuente          #+#    #+#              #
-#    Updated: 2023/12/08 08:36:25 by cesar            ###   ########.fr        #
+#    Updated: 2023/12/12 10:53:56 by cesar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_SERVER = server.c
-SRCS_CLIENT = client.c
-
-OBJS_SERVER = ${SRCS_SERVER:.c=.o}
-OBJS_SERVER	:= $(addprefix build/, $(OBJS_SERVER))
-OBJS_CLIENT = ${SRCS_CLIENT:.c=.o}
-OBJS_CLIENT	:= $(addprefix build/, $(OBJS_CLIENT))
-
-
-HEADER = includes/minitalk.h
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+LIBFT = ./libft/libft.a
+RM = rm -rf
 
 SERVER = server
 CLIENT = client
 
-CC = cc -g
+SERVER_SRCS = srcs/server.c
+SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -I includes -fsanitize=address
+CLIENT_SRCS = srcs/client.c
+CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 
-all :	${SERVER} ${CLIENT}
 
-build/server.o :	server.c ${HEADER}
-	${CC} ${FLAGS} -c $< -o $@
 
-build/client.o :	client.c ${HEADER}
-	${CC} ${FLAGS} -c $< -o $@
+SERVER_B = server_bonus
+CLIENT_B = client_bonus
 
-${SERVER} :	${OBJS_SERVER}
-	${CC} ${FLAGS} -o ${SERVER} ${OBJS_SERVER}
+SERVER_B_SRCS = srcs_bonus/server_bonus.c
+SERVER_B_OBJS = $(SERVER_B_SRCS:.c=.o)
 
-${CLIENT} :	${OBJS_CLIENT}
-	${CC} ${FLAGS} -o ${CLIENT} ${OBJS_CLIENT}
+CLIENT_B_SRCS = srcs_bonus/client_bonus.c
+CLIENT_B_OBJS = $(CLIENT_B_SRCS:.c=.o)
 
-clean :
-	rm -f build/*.o
+all: $(SERVER) $(CLIENT)
 
-fclean :	clean
-	rm -f ${SERVER} ${CLIENT}
+$(LIBFT):
+	$(MAKE) -C ./libft
+	
+$(SERVER): $(SERVER_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(SERVER_OBJS) $(LIBFT) -o server
+$(CLIENT): $(CLIENT_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(CLIENT_OBJS) $(LIBFT) -o client
+	
+$(SERVER_B): $(SERVER_B_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(SERVER_B_OBJS) $(LIBFT) -o server_bonus
+$(CLIENT_B): $(CLIENT_B_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(CLIENT_B_OBJS) $(LIBFT) -o client_bonus
 
-re :	fclean all
+clean:
+	$(MAKE) clean -C ./libft
+	$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
+	$(RM) $(SERVER_B_OBJS) $(CLIENT_B_OBJS) 
+fclean: clean
+	$(MAKE) fclean -C ./libft
+	$(RM) $(SERVER) $(CLIENT)
+	$(RM) $(SERVER_B) $(CLIENT_B)
+re: fclean all
 
-.PHONY : all clean fclean re
+bonus: $(SERVER_B) $(CLIENT_B)
