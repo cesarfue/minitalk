@@ -6,7 +6,7 @@
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:47:52 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/13 08:40:30 by cesar            ###   ########.fr       */
+/*   Updated: 2023/12/13 10:57:22 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ void	binradio(pid_t id, char c)
 	{
 		if (bin[j] == '0')
 		{
+			usleep(100);
 			if (kill(id, SIGUSR1) == -1)
 				quit("SIGUSR1 not sent");
 		}
 		else if (bin[j] == '1')
 		{
+			usleep(100);
 			if (kill(id, SIGUSR2) == -1)
 				quit("SIGUSR2 not sent");
 		}
-		usleep(100);
 	}
 	free(bin);
 }
