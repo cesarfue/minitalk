@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:03 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 17:13:34 by cefuente         ###   ########.fr       */
+/*   Updated: 2023/12/13 08:45:29 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	end_sig(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		write(1, "Message transmitted\n", 21);
+		ft_printf("Message transmitted\n");
 		exit(0);
 	}
 }

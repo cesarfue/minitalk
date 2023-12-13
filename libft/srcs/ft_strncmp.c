@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:22:36 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/13 08:39:57 by cesar            ###   ########.fr       */
+/*   Created: 2023/11/08 10:42:56 by cefuente          #+#    #+#             */
+/*   Updated: 2023/12/13 08:16:07 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/libft.h"
 
-# include <signal.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while ((s1[i] || s2[i]) && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	if (i == n)
+		return (0);
+	return ((unsigned char)(s1[i] - s2[i]));
+}

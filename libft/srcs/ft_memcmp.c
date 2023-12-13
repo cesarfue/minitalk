@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:22:36 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/13 08:39:57 by cesar            ###   ########.fr       */
+/*   Created: 2023/11/14 13:10:15 by cesar             #+#    #+#             */
+/*   Updated: 2023/12/13 08:16:07 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/libft.h"
 
-# include <signal.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	const unsigned char	*ps1;
+	const unsigned char	*ps2;
+	size_t				i;
 
-#endif
+	i = 0;
+	ps1 = s1;
+	ps2 = s2;
+	while ((ps1 + i || ps2[i]) && i < n)
+	{
+		if ((unsigned char)ps1[i] != (unsigned char)ps2[i])
+			return (ps1[i] - ps2[i]);
+		i++;
+	}
+	if (i == n)
+		return (0);
+	return ((int)(ps1[i] - ps2[i]));
+}

@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:22:36 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/13 08:39:57 by cesar            ###   ########.fr       */
+/*   Created: 2023/11/10 15:30:09 by cesar             #+#    #+#             */
+/*   Updated: 2023/12/13 08:16:07 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/libft.h"
 
-# include <signal.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char		*pdest;
+	const unsigned char	*psrc;
+	size_t				i;
 
-#endif
+	pdest = dest;
+	psrc = src;
+	i = -1;
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	if (pdest < psrc)
+	{
+		while (++i < n)
+			pdest[i] = psrc[i];
+	}
+	else
+	{
+		while (++i < n)
+			pdest[n - i - 1] = psrc[n - i - 1];
+	}
+	return (dest);
+}

@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:22:36 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/13 08:39:57 by cesar            ###   ########.fr       */
+/*   Created: 2023/11/13 09:20:13 by cesar             #+#    #+#             */
+/*   Updated: 2023/12/13 08:16:07 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/libft.h"
 
-# include <signal.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t			i;
+	size_t			j;
+	char			*out;
 
-#endif
+	i = 0;
+	j = 0;
+	out = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!out)
+		return (NULL);
+	while (s1[i])
+	{
+		out[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		out[i++] = s2[j++];
+	out[i] = 0;
+	return (out);
+}

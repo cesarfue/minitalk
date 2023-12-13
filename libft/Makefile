@@ -6,87 +6,41 @@
 #    By: cesar <cesar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 18:46:17 by cefuente          #+#    #+#              #
-#    Updated: 2023/12/11 21:21:45 by cesar            ###   ########.fr        #
+#    Updated: 2023/12/13 08:13:15 by cesar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	ft_atoi.c \
-	ft_bzero.c \
-	ft_calloc.c \
-	ft_isalnum.c \
-	ft_isalpha.c \
-	ft_isascii.c \
-	ft_isdigit.c \
-	ft_isprint.c \
-	ft_itoa.c \
-	ft_memchr.c \
-	ft_memcmp.c \
-	ft_memcpy.c \
-	ft_memmove.c \
-	ft_memset.c \
-	ft_putchar_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c \
-	ft_putstr_fd.c \
-	ft_split.c \
-	ft_strchr.c \
-	ft_strdup.c \
-	ft_striteri.c \
-	ft_strjoin.c \
-	ft_strlcat.c \
-	ft_strlcpy.c \
-	ft_strlen.c \
-	ft_strmapi.c \
-	ft_strncmp.c \
-	ft_strnstr.c \
-	ft_strrchr.c \
-	ft_strtrim.c \
-	ft_substr.c \
-	ft_tolower.c \
-	ft_toupper.c \
-	quit.c
+SRCS	=	srcs/ft_atoi.c srcs/ft_bzero.c srcs/ft_calloc.c srcs/ft_isalnum.c srcs/ft_isalpha.c srcs/ft_isascii.c srcs/ft_isdigit.c \
+	srcs/ft_isprint.c srcs/ft_itoa.c srcs/ft_memchr.c srcs/ft_memcmp.c srcs/ft_memcpy.c srcs/ft_memmove.c srcs/ft_memset.c srcs/ft_putchar_fd.c \
+	srcs/ft_putendl_fd.c srcs/ft_putnbr_fd.c srcs/ft_putstr_fd.c srcs/ft_split.c srcs/ft_strchr.c srcs/ft_strdup.c srcs/ft_striteri.c srcs/ft_strjoin.c \
+	srcs/ft_strlcat.c srcs/ft_strlcpy.c srcs/ft_strlen.c srcs/ft_strmapi.c srcs/ft_strncmp.c srcs/ft_strnstr.c srcs/ft_strrchr.c srcs/ft_strtrim.c \
+	srcs/ft_substr.c srcs/ft_tolower.c srcs/ft_toupper.c \
+	srcs/ft_lstadd_back_bonus.c srcs/ft_lstadd_front_bonus.c srcs/ft_lstclear_bonus.c srcs/ft_lstdelone_bonus.c srcs/ft_lstiter_bonus.c srcs/ft_lstlast_bonus.c \
+	srcs/ft_lstmap_bonus.c srcs/ft_lstnew_bonus.c srcs/ft_lstsize_bonus.c \
+	srcs/quit.c \
+	srcs/printf/ft_printf.c srcs/printf/ft_numbers.c srcs/printf/ft_strings.c srcs/printf/ft_switch.c
 
-BNS	=	ft_lstadd_back_bonus.c \
-	ft_lstadd_front_bonus.c \
-    ft_lstclear_bonus.c \
-    ft_lstdelone_bonus.c \
-	ft_lstiter_bonus.c \
-	ft_lstlast_bonus.c \
-	ft_lstmap_bonus.c \
-	ft_lstnew_bonus.c \
-	ft_lstsize_bonus.c
-
-OBJS    =    ${SRCS:.c=.o}
-
-B_OBJS    =    ${BNS:.c=.o}
-
-HEADER    =    libft.h
-
+OBJS	=	$(patsubst srcs/%.c, objs/%.o, $(SRCS))
+HEADER    =    includes/libft.h includes/ft_printf.h
 NAME    =    libft.a
-
 CC        =    cc
-
 AR        =    ar -rc
-
 FLAGS    =    -Wall -Wextra -Werror
 
 all        :    ${NAME}
 
-%.o        :    %.c ${HEADER}
+objs/%.o        :    srcs/%.c ${HEADER}
 	${CC} ${FLAGS} -c $< -o $@
 
 ${NAME}    :    ${OBJS} Makefile
 	${AR} ${NAME} ${OBJS}
 
-bonus    :
-	@make SRCS="${SRCS} ${BNS}"
-
 clean    :
-	rm -f ${OBJS} ${B_OBJS}
+	rm -f ${OBJS}
 
 fclean    :    clean
-	rm -f ${NAME} ${B_OBJS}
+	rm -f ${NAME}
 
 re        :    fclean all
 
-.PHONY    :    all clean fclean re bonus
+.PHONY    :    all clean fclean re

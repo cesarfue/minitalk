@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cefuente <cefuente@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cesar <cesar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:21:06 by cesar             #+#    #+#             */
-/*   Updated: 2023/12/12 17:23:10 by cefuente         ###   ########.fr       */
+/*   Updated: 2023/12/13 08:45:54 by cesar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	sigconfig(void)
 
 int	main(void)
 {
-	printf("Server PID is %i\n", getpid());
+	ft_printf("Server PID is %i\n", getpid());
 	while (1)
 		sigconfig();
 	return (0);

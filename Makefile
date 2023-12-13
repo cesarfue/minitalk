@@ -6,7 +6,7 @@
 #    By: cesar <cesar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 18:46:17 by cefuente          #+#    #+#              #
-#    Updated: 2023/12/12 10:53:56 by cesar            ###   ########.fr        #
+#    Updated: 2023/12/13 08:50:51 by cesar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 
 CLIENT_SRCS = srcs/client.c
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
-
 
 
 SERVER_B = server_bonus
