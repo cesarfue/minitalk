@@ -6,7 +6,7 @@
 #    By: cesar <cesar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 18:46:17 by cefuente          #+#    #+#              #
-#    Updated: 2023/12/13 08:50:51 by cesar            ###   ########.fr        #
+#    Updated: 2023/12/13 09:29:22 by cesar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,18 @@ LIBFT = ./libft/libft.a
 RM = rm -rf
 
 SERVER = server
-CLIENT = client
-
-SERVER_SRCS = srcs/server.c
-SERVER_OBJS = $(SERVER_SRCS:.c=.o)
-
-CLIENT_SRCS = srcs/client.c
-CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
-
-
 SERVER_B = server_bonus
+CLIENT = client
 CLIENT_B = client_bonus
 
+SERVER_SRCS = srcs/server.c
 SERVER_B_SRCS = srcs_bonus/server_bonus.c
-SERVER_B_OBJS = $(SERVER_B_SRCS:.c=.o)
-
+CLIENT_SRCS = srcs/client.c
 CLIENT_B_SRCS = srcs_bonus/client_bonus.c
+
+SERVER_OBJS = $(SERVER_SRCS:.c=.o)
+SERVER_B_OBJS = $(SERVER_B_SRCS:.c=.o)
+CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 CLIENT_B_OBJS = $(CLIENT_B_SRCS:.c=.o)
 
 all: $(SERVER) $(CLIENT)
